@@ -17,7 +17,7 @@ return function(opt)
 
    -- load cunn
    if opt.useCUDA then 
-      require 'cunn' 
+      require 'cunn'
       require 'cutorch'
    end
 

@@ -90,7 +90,7 @@ function util.unflattenParamsArb(exampleParams, flatParams)
 end
 
 -- get k items from each class 
-function util.extractK(input, target, k, nClasses)
+function util.extractK(input, target, k, nClasses, mixedClasses)
    if k*nClasses == target:size(1) then
       return input, target
    end 
@@ -104,20 +104,42 @@ function util.extractK(input, target, k, nClasses)
    local targetNew = torch.Tensor(k*nClasses):typeAs(target)
 
    local count = {}
-   for i=1,nClasses do
-      count[i] = 0
-   end
 
-   local idx = 1
-   for i=1,target:size(1) do
-      if count[target[i]] and count[target[i]] < k then
-         inputNew[idx] = input[i]
-         targetNew[idx] = target[i] 
-   
-         idx = idx + 1
-         count[target[i]] = count[target[i]] + 1
+   if mixedClasses then
+      local idx = 1
+      local countSize = 0
+      for i=1,target:size(1) do
+         if count[target[i]] then
+            if count[target[i]] < k then
+               inputNew[idx] = input[i]
+               targetNew[idx] = target[i]
+               idx = idx + 1
+               count[target[i]] = count[target[i]] + 1
+            end
+         elseif countSize < nClasses then
+            inputNew[idx] = input[i]
+            targetNew[idx] = target[i]
+            idx = idx + 1
+            count[target[i]] = 1
+            countSize = countSize + 1
+         end
       end
-   end 
+   else
+      for i=1,nClasses do
+         count[i] = 0
+      end
+
+      local idx = 1
+      for i=1,target:size(1) do
+         if count[target[i]] and count[target[i]] < k then
+            inputNew[idx] = input[i]
+            targetNew[idx] = target[i]
+
+            idx = idx + 1
+            count[target[i]] = count[target[i]] + 1
+         end
+      end
+   end
 
    return inputNew, targetNew
 end

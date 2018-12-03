@@ -10,8 +10,8 @@ return function(opt)
    opt.maxGradNorm = 0.25 
  
    opt.batchSize = {}
-   opt.batchSize[1]=5
-   opt.batchSize[5]=5 
+   opt.batchSize[1]=10
+   opt.batchSize[5]=50
 
    opt.nEpochs = {}
    opt.nEpochs[1]=12
@@ -22,8 +22,6 @@ return function(opt)
    opt.printPer = 1000
 
    opt.useCUDA = true
-
-   opt.paramsFile = 'metaLearner_params_snapshot.th'
 
    return opt
 end

@@ -10,8 +10,8 @@ return function(opt)
    opt.maxGradNorm = 0.25 
  
    opt.batchSize = {}
-   opt.batchSize[1]=5
-   opt.batchSize[5]=25
+   opt.batchSize[1]=10
+   opt.batchSize[5]=50
 
    opt.nEpochs = {}
    opt.nEpochs[1]=5

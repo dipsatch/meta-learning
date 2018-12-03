@@ -1,9 +1,11 @@
 local _ = require 'moses'
 
 function check(rawData, opt, k)
-   if #rawData.item <= 0 or (opt.nClasses[k] 
+--   print('#rawData.item=',#rawData.item)
+--   print('opt.nClasses[k]=',opt.nClasses[k])
+   if #rawData.item <= 0 or (opt.nClasses[k]
       and #rawData.item < opt.nClasses[k]) then
-      
+      print('---- Less #rawData.item ----')
       return false
    end  
 
@@ -31,6 +33,7 @@ return function(opt)
    }
    
    local data = require(opt.dataName)(dataOpt)
+   --package.path = package.path .. ';/Users/dghosh/Documents/UIC/CS597/meta-learning-lstm/dataset/dataset2.lua'
    package.path = package.path .. ';/home/ec2-user/uic/meta-learning-lstm/dataset/dataset2.lua'
 
    require('Dataset2')
@@ -38,7 +41,7 @@ return function(opt)
    local function prepareDataset(split, sample, field, batchSize)
       local examples = torch.cat(_.map(sample.item, function(item, i)
          return item.extra[field]
-      end), 1) 
+      end), 1)
 
       local classes
       if opt.trainFull and split == 'train' then
@@ -63,14 +66,13 @@ return function(opt)
                while not check(rawData, opt, k) do
                   rawdata = data[k].get()
                end
-               local trainDataset, testDataset = prepareDataset(k, 
-                  rawData, 'supportExamples', lopt.trainBatchSize), 
+               local trainDataset, testDataset = prepareDataset(k, rawData, 'supportExamples', lopt.trainBatchSize),
                   prepareDataset(k, rawData, 'evalExamples', lopt.testBatchSize)
                               
                return trainDataset, testDataset
             end 
       end 
-   end)  
+   end)
 
    return data.train, data.val, data.test
 end

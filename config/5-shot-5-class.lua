@@ -1,6 +1,6 @@
 
 return function(opt)
-   opt.nClasses = {train=5, val=5, test=5}
+   opt.nClasses = {train=10, val=10, test=10}
    opt.nTrainShot = 5
    opt.nEval = 15
    
