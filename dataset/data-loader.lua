@@ -33,8 +33,8 @@ return function(opt)
    }
    
    local data = require(opt.dataName)(dataOpt)
-   --package.path = package.path .. ';/Users/dghosh/Documents/UIC/CS597/meta-learning-lstm/dataset/dataset2.lua'
-   package.path = package.path .. ';/home/ec2-user/uic/meta-learning-lstm/dataset/dataset2.lua'
+   
+   package.path = package.path .. ';dataset/dataset2.lua'
 
    require('Dataset2')
    
