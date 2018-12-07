@@ -94,6 +94,11 @@ return function(opt, dataset)
          print(trainConf) 
          trainConf:zero()
 
+         local accVal = {}
+         for _, k in pairs(opt.nTestShot) do
+            accVal[k] = torch.zeros(opt.nValidationEpisode)
+         end
+
          -- meta-validation loop   
          for v=1,opt.nValidationEpisode do
             local trainSet, testSet = metaValidationSet.createEpisode({})
@@ -113,7 +118,8 @@ return function(opt, dataset)
                for i=1,prediction:size(1) do
                   valConf[k]:add(prediction[i], testData.target[i])  
                end
-
+               valConf[k]:updateValids()
+               accVal[k][v] = valConf[k].totalValid*100
             end
          end   
          
@@ -121,7 +127,8 @@ return function(opt, dataset)
          for _,k in pairs(opt.nTestShot) do 
             print('Validation Accuracy (' .. opt.nValidationEpisode 
                .. ' episodes, ' .. k .. '-shot)')
-            print(valConf[k]) 
+            print(accVal[k]:mean())
+            print(valConf[k])
             valConf[k]:zero()
          end
    

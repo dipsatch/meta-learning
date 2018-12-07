@@ -7,7 +7,8 @@ return function(opt)
    opt.nTest = {100, 250, 600} 
    opt.nTestShot = {1,5}
 
-   opt.paramsFile = 'metaLearner_params_snapshot.th'
+-- Only uncomment paramsFile when you want to RESUME training
+--   opt.paramsFile = 'metaLearner_params_snapshot.th'
 
    return opt
 end

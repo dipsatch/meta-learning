@@ -23,7 +23,5 @@ return function(opt)
 
    opt.useCUDA = true
 
-   opt.paramsFile = 'metaLearner_params_snapshot.th'
-
    return opt
 end
