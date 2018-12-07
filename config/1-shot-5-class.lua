@@ -5,8 +5,9 @@ return function(opt)
    opt.nEval = 15
    
    opt.nTest = {100, 250, 600} 
-   opt.nTestShot = {1,5}
+   opt.nTestShot = {1}
 
+-- Only uncomment paramsFile when you want to RESUME training
 --   opt.paramsFile = 'metaLearner_params_snapshot.th'
 
    return opt
